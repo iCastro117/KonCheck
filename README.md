@@ -317,3 +317,6 @@ Para producción, cambiar:
 ## Licencia
 
 Proyecto académico - Universidad Konrad Lorenz
+
+# KonCheck
+SW DE VALIDACION 

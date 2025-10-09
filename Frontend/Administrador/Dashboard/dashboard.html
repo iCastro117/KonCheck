@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - KonCheck</title>
+  <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    /* Contenedor general */
+    .main-container {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+      background-color: #00839a; /* Azul principal */
+    }
+
+    /* Panel izquierdo (azul) */
+    .sidebar {
+      width: 260px;
+      background-color: #00839a;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+      color: white;
+    }
+
+    /* Sección del logo */
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo {
+      width: 45px;
+      height: 45px;
+    }
+
+    .app-name {
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.1;
+     text-shadow:  2px 2px 4px rgba(0, 0, 0, 0.7),   /* sombra negra principal */
+    -1px -1px 2px rgba(255, 255, 255, 0.2); /* ligero brillo para resaltar */
+    }
+
+    /* Botón "Ciudadanos" */
+    .menu-button {
+      background-color: white;
+      color: #00839a;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 35px;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      width: fit-content;
+      margin-top: 30px;
+      transition: background-color 0.3s ease;
+      margin-left: 70px;
+    }
+
+  /* 🔹 Solo esto cambia: mover el icono y texto más a la izquierda */
+    .menu-button .icon {
+      margin-left: -10px;
+    }
+
+    .menu-button:hover {
+      background-color: #e5e5e5;
+           text-shadow:  2px 2px 4px rgba(0, 0, 0, 0.7),   /* sombra negra principal */
+    -1px -1px 2px rgba(255, 255, 255, 0.2); /* ligero brillo para resaltar */
+    }
+
+    /* Texto "Cerrar Sesión" */
+    .logout {
+      color: white;
+      text-decoration: none;
+      font-size: 20px;
+      align-self: flex-start;
+      margin-top: auto;
+      transition: opacity 0.3s ease;
+      margin-left: 50px;
+        font-weight: 600; /* 🔹 más negrilla */
+
+    }
+
+    .logout:hover {
+      opacity: 0.8;
+     
+    }
+
+    /* Panel blanco derecho */
+    .content {
+      flex: 1;
+      background-color: white;
+      border-top-left-radius: 15px;
+      border-bottom-left-radius: 15px;
+      margin: 20px 20px 20px 0;
+      position: relative;
+    }
+
+    /* Icono de perfil */
+    .profile-icon {
+      position: absolute;
+      top: 20px;
+      right: 35px;
+      font-size: 30px;
+      color: black;
+    }
+
+
+
+
+/* ------------------------ */
+/* ------------------------ */
+/* ------------------------ */
+
+
+
+/* 🔝 Contenedor superior: div azul + icono */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
+  margin: 30px auto 30px auto; /* espacio arriba y abajo */
+}
+
+/* Div azul redondeado */
+.header-box {
+  flex: 1;
+  background-color: #00839a;
+  color: #fff;
+  padding: 15px 30px;
+  border-radius: 20px;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 85px; /* espacio con el icono */
+}
+
+/* Icono de perfil */
+.profile-icon {
+  font-size: 42px;
+  color: #000;
+  cursor: pointer;
+  margin-top: 9px;
+}
+
+/* 2️⃣ Contenedor del buscador y botón */
+.search-section {
+  width: 95%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Barra de búsqueda */
+.search-bar {
+  position: relative;
+  margin-right: 300px;
+  flex: 1;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 12px 45px 12px 20px;
+  border: 2px solid #ccc;
+  border-radius: 30px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.search-bar input:focus {
+  border-color: #00839a;
+}
+
+.search-icon {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: #555;
+}
+
+/* 3️⃣ Botón */
+.new-btn {
+  background-color: #00839a;
+  color: #fff;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.new-btn:hover {
+  background-color: #006b7f;
+  transform: translateY(-2px);
+}
+
+/* 4️⃣ Título inferior */
+.section-title {
+  margin: 30px 0 0 40px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #000;
+}
+
+
+
+
+
+
+/* TABLA DE DATOS */
+
+/* 📁 Contenedor con borde, sombra y esquinas redondeadas */
+.registro-box {
+  width: 95%;
+  min-height: 400px;
+  margin: 15px auto 40px auto;
+  background-color: #fff;
+  border: 1.5px solid #dcdcdc;
+  border-radius: 15px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  transition: box-shadow 0.3s ease;
+}
+
+.registro-box:hover {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+
+/* 📊 Contenedor con scroll */
+.tabla-contenedor {
+  max-height: 400px;
+  overflow-y: auto;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+/* 🗂️ Estilo tabla */
+.tabla-ciudadanos {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "Segoe UI", sans-serif;
+  font-size: 15px;
+}
+
+.tabla-ciudadanos thead {
+  background: #f5f5f5;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.tabla-ciudadanos th,
+.tabla-ciudadanos td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+.tabla-ciudadanos th {
+  font-weight: bold;
+}
+
+.tabla-ciudadanos tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+.estado {
+  font-weight: 600;
+}
+
+.estado.requerido {
+  color: #d40000;
+}
+
+.estado.no-requerido {
+  color: #1a7a1a;
+}
+
+
+/* 📍 Botones de acciones */
+.acciones {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.acciones button {
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+/* ✏️ Botón Editar */
+.btn-editar {
+  background: #00b050;
+  color: #fff;
+}
+
+.btn-editar:hover {
+  background: #009245;
+  transform: scale(1.05);
+}
+
+/* 🗑️ Botón Eliminar */
+.btn-eliminar {
+  background: #d32f2f;
+  color: #fff;
+}
+
+.btn-eliminar:hover {
+  background: #b71c1c;
+  transform: scale(1.05);
+}
+
+
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <!-- Panel izquierdo azul -->
+    <div class="sidebar">
+      <div>
+        <div class="logo-section">
+          <img src="../../Assets/LOGOINGRESAR.png" alt="KonCheck logo" class="logo" />
+          <h2 class="app-name">KonCheck</h2>
+        </div>
+
+        <button class="menu-button">
+          <span class="icon">🔒 </span> Ciudadanos  
+        </button>
+      </div>
+
+      <a href="#" class="logout">Cerrar Sesión</a>
+    </div>
+
+    <!-- Panel blanco derecho -->
+            <div class="content">
+        <!-- 🔝 Fila superior: div azul + icono -->
+        <div class="top-bar">
+            <div class="header-box">
+            Gestión de Ciudadanos
+            </div>
+            <div class="profile-icon">👤</div>
+        </div>
+
+        <!-- 2️⃣ Buscador -->
+        <div class="search-section">
+            <div class="search-bar">
+            <input type="text" placeholder="Buscar por identificación" />
+            <span class="search-icon">🔍</span>
+            </div>
+
+            <!-- 3️⃣ Botón -->
+            <button class="new-btn">Nuevo Ciudadano</button>
+        </div>
+
+        <!-- 4️⃣ Título debajo -->
+        <h2 class="section-title">Registro de Ciudadanos</h2>
+
+              <!-- 📁 Contenedor con borde y sombra -->
+                <div class="registro-box">
+                    <div class="tabla-contenedor">
+                        <table class="tabla-ciudadanos">
+                        <thead>
+                            <tr>
+                            <th>Identificación</th>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>Fecha Nacimiento</th>
+                            <th>Lugar Nacimiento</th>
+                            <th>Estado Judicial</th>
+                            <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            <td>1.088.765.432</td>
+                            <td>Juan</td>
+                            <td>Pérez</td>
+                            <td>1990-05-20</td>
+                            <td>Bogotá</td>
+                            <td><span class="estado no-requerido">🟢 No Requerido</span></td>
+                            <td class="acciones">
+                                <button class="btn-editar">✏️</button>
+                                <button class="btn-eliminar">🗑️</button>
+                            </td>
+
+                            </tr>
+                            <tr>
+                            <td>1.054.223.781</td>
+                            <td>María</td>
+                            <td>Gómez</td>
+                            <td>1988-02-10</td>
+                            <td>Medellín</td>
+                            <td><span class="estado requerido">🔴 Requerido</span></td>
+                            <td class="acciones">
+                                <button class="btn-editar">✏️</button>
+                                <button class="btn-eliminar">🗑️</button>
+                            </td>
+                            
+                            </tr>
+                            <tr>
+                            <td>1.092.345.876</td>
+                            <td>Carlos</td>
+                            <td>Rodríguez</td>
+                            <td>1992-09-15</td>
+                            <td>Cali</td>
+                            <td><span class="estado no-requerido">🟢 No Requerido</span></td>
+                            <td class="acciones">
+                                <button class="btn-editar">✏️</button>
+                                <button class="btn-eliminar">🗑️</button>
+                            </td>
+                            
+                            </tr>
+                            <tr>
+                            <td>1.067.890.234</td>
+                            <td>Luisa</td>
+                            <td>Martínez</td>
+                            <td>1985-11-30</td>
+                            <td>Barranquilla</td>
+                            <td><span class="estado requerido">🔴 Requerido</span></td>
+                            <td class="acciones">
+                                <button class="btn-editar">✏️</button>
+                                <button class="btn-eliminar">🗑️</button>
+                            </td>
+                            
+                            </tr>
+                            <tr>
+                            <td>1.034.567.823</td>
+                            <td>Andrés</td>
+                            <td>López</td>
+                            <td>1994-03-22</td>
+                            <td>Cartagena</td>
+                            <td><span class="estado no-requerido">🟢 No Requerido</span></td>
+                            <td class="acciones">
+                                <button class="btn-editar">✏️</button>
+                                <button class="btn-eliminar">🗑️</button>
+                            </td>
+                           
+                            </tr>
+                            <tr>
+                            <td>1.089.432.678</td>
+                            <td>Paula</td>
+                            <td>Ramírez</td>
+                            <td>1989-07-19</td>
+                            <td>Bucaramanga</td>
+                            <td><span class="estado requerido">🔴 Requerido</span></td>
+                            <td class="acciones">
+                                <button class="btn-editar">✏️</button>
+                                <button class="btn-eliminar">🗑️</button>
+                            </td>
+                           
+                            </tr>
+                            <tr>
+                            <td>1.077.111.905</td>
+                            <td>Diego</td>
+                            <td>Torres</td>
+                            <td>1990-01-25</td>
+                            <td>Cúcuta</td>
+                            <td><span class="estado no-requerido">🟢 No Requerido</span></td>
+                            <td class="acciones">
+                                <button class="btn-editar">✏️</button>
+                                <button class="btn-eliminar">🗑️</button>
+                            </td>
+                           
+                            </tr>
+                            <tr>
+                            <td>1.082.999.345</td>
+                            <td>Camila</td>
+                            <td>Castillo</td>
+                            <td>1993-06-12</td>
+                            <td>Manizales</td>
+                            <td><span class="estado no-requerido">🟢 No Requerido</span></td>
+                            <td class="acciones">
+                                <button class="btn-editar">✏️</button>
+                                <button class="btn-eliminar">🗑️</button>
+                            </td>
+                            
+                            </tr>
+                            <tr>
+                            <td>1.056.712.980</td>
+                            <td>Felipe</td>
+                            <td>Gutiérrez</td>
+                            <td>1986-09-05</td>
+                            <td>Pereira</td>
+                            <td><span class="estado requerido">🔴 Requerido</span></td>
+                            <td class="acciones">
+                                <button class="btn-editar">✏️</button>
+                                <button class="btn-eliminar">🗑️</button>
+                            </td>
+                           
+                            </tr>
+                            <tr>
+                            <td>1.090.654.321</td>
+                            <td>Valentina</td>
+                            <td>Díaz</td>
+                            <td>1995-04-18</td>
+                            <td>Pasto</td>
+                            <td><span class="estado no-requerido">🟢 No Requerido</span></td>
+                            <td class="acciones">
+                                <button class="btn-editar">✏️</button>
+                                <button class="btn-eliminar">🗑️</button>
+                            </td>
+                           
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                    </div>
+        </div>
+
+
+
+<script>
+  // Selecciona todos los botones de editar
+  document.querySelectorAll('.btn-editar').forEach(boton => {
+    boton.addEventListener('click', () => {
+      // Redirige a la página de edición
+      window.location.href = "editarCiudadano.html";
+    });
+  });
+</script>
+
+
+
+
+<script>
+  document.querySelectorAll('.btn-editar').forEach(boton => {
+    boton.addEventListener('click', (e) => {
+      const fila = e.target.closest("tr"); // Obtener la fila completa
+
+      // Tomar todos los datos de esa fila
+      const ciudadano = {
+        identificacion: fila.cells[0].innerText,
+        nombres: fila.cells[1].innerText,
+        apellidos: fila.cells[2].innerText,
+        fechaNacimiento: fila.cells[3].innerText,
+        lugarNacimiento: fila.cells[4].innerText,
+        estadoJudicial: fila.cells[5].innerText
+      };
+
+      // Guardarlo en localStorage para usarlo en la otra página
+      localStorage.setItem("ciudadanoSeleccionado", JSON.stringify(ciudadano));
+
+      // Redirigir a editarCiudadano.html
+      window.location.href = "editarCiudadano.html";
+    });
+  });
+</script>
+
+
+
+<script>
+  // Detecta el clic en el botón "Nuevo Ciudadano"
+  document.querySelector('.new-btn').addEventListener('click', () => {
+    // Redirige al archivo crearCiudadano.html
+    window.location.href = 'crearCiudadano.html';
+  });
+</script>
+
+
+
+
+<script>
+  // Cargar los ciudadanos almacenados y mostrarlos en la tabla
+  document.addEventListener("DOMContentLoaded", () => {
+    const tbody = document.querySelector(".tabla-ciudadanos tbody");
+
+    // Obtener los ciudadanos del localStorage
+    const lista = JSON.parse(localStorage.getItem("ciudadanos")) || [];
+
+    lista.forEach(c => {
+      const fila = document.createElement("tr");
+      fila.innerHTML = `
+        <td>${c.identificacion}</td>
+        <td>${c.nombres}</td>
+        <td>${c.apellidos}</td>
+        <td>${c.fechaNacimiento}</td>
+        <td>${c.lugarNacimiento}</td>
+        <td><span class="estado ${c.estadoJudicial === "Requerido" ? "requerido" : "no-requerido"}">
+          ${c.estadoJudicial === "Requerido" ? "🔴 Requerido" : "🟢 No Requerido"}
+        </span></td>
+        <td class="acciones">
+          <button class="btn-editar">✏️</button>
+          <button class="btn-eliminar">🗑️</button>
+        </td>
+      `;
+      tbody.appendChild(fila);
+    });
+  });
+</script>
+
+</body>
+</html>
