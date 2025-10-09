@@ -384,6 +384,7 @@
             <div class="form-group">
               <label>Estado</label>
               <select name="estado" class="estado-select">
+                <option value="">Seleccione un estado</option>
                 <option value="No Requerido">🟢 No Requerido</option>
                 <option value="Requerido">🔴 Requerido</option>
               </select>
@@ -402,29 +403,107 @@
         document.addEventListener('DOMContentLoaded', () => {
           const form = document.getElementById('formCrear');
 
-          // Guardar cambios
+          // Guardar cambios con validaciones visuales
           form.addEventListener('submit', (e) => {
             e.preventDefault();
+
+            // Eliminar mensajes de error previos
+            form.querySelectorAll('.error-text').forEach(el => el.remove());
+            form.querySelectorAll('input, select').forEach(el => {
+              el.style.borderColor = '#bfbfbf';
+            });
+
+            const identificacion = form.identificacion.value.trim();
+            const nombres = form.nombres.value.trim();
+            const apellidos = form.apellidos.value.trim();
+            const fechaNacimiento = form.fechaNacimiento.value.trim();
+            const lugarNacimiento = form.lugarNacimiento.value.trim();
+            const rh = form.rh.value.trim().toUpperCase();
+            const fechaExpedicion = form.fechaExpedicion.value.trim();
+            const lugarExpedicion = form.lugarExpedicion.value.trim();
+            const estatura = form.estatura.value.trim();
+            const estado = form.estado.value.trim();
+
+            const rhValidos = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+            let valido = true;
+
+            // Función auxiliar para mostrar errores
+            const mostrarError = (campo, mensaje) => {
+              campo.style.borderColor = '#d32f2f';
+              const error = document.createElement('div');
+              error.className = 'error-text';
+              error.textContent = mensaje;
+              Object.assign(error.style, {
+                color: '#d32f2f',
+                fontSize: '13px',
+                marginTop: '4px',
+                marginLeft: '2px'
+              });
+              campo.insertAdjacentElement('afterend', error);
+              valido = false;
+            };
+
+            // 🔹 Validaciones campo por campo
+            if (!identificacion) mostrarError(form.identificacion, "Campo obligatorio.");
+            else if (!/^\d+$/.test(identificacion)) mostrarError(form.identificacion, "Solo números permitidos.");
+
+            if (!nombres) mostrarError(form.nombres, "Campo obligatorio.");
+            else if (!/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/.test(nombres)) mostrarError(form.nombres, "Solo letras permitidas.");
+
+            if (!apellidos) mostrarError(form.apellidos, "Campo obligatorio.");
+            else if (!/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/.test(apellidos)) mostrarError(form.apellidos, "Solo letras permitidas.");
+
+            if (!fechaNacimiento) mostrarError(form.fechaNacimiento, "Campo obligatorio.");
+
+            if (!lugarNacimiento) mostrarError(form.lugarNacimiento, "Campo obligatorio.");
+            else if (!/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/.test(lugarNacimiento)) mostrarError(form.lugarNacimiento, "Solo letras permitidas.");
+
+            if (!rh) mostrarError(form.rh, "Campo obligatorio.");
+            else if (!rhValidos.includes(rh)) mostrarError(form.rh, "Valor inválido. Ej: O+, A-, AB+...");
+
+            if (!fechaExpedicion) mostrarError(form.fechaExpedicion, "Campo obligatorio.");
+
+            if (!lugarExpedicion) mostrarError(form.lugarExpedicion, "Campo obligatorio.");
+            else if (!/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/.test(lugarExpedicion)) mostrarError(form.lugarExpedicion, "Solo letras permitidas.");
+
+            if (!estatura) mostrarError(form.estatura, "Campo obligatorio.");
+
+            if (!estado) mostrarError(form.estado, "Debe seleccionar un estado.");
+
+            if (!valido) return; // 🚫 Detiene el guardado si hay errores
+
+            // ✅ Si todo está bien, guardar normalmente
             const ciudadanos = JSON.parse(localStorage.getItem('ciudadanos')) || [];
 
             const nuevoCiudadano = {
-              identificacion: form.identificacion.value,
-              nombres: form.nombres.value,
-              apellidos: form.apellidos.value,
-              fechaNacimiento: form.fechaNacimiento.value,
-              lugarNacimiento: form.lugarNacimiento.value,
-              rh: form.rh.value,
-              fechaExpedicion: form.fechaExpedicion.value,
-              lugarExpedicion: form.lugarExpedicion.value,
-              estatura: form.estatura.value,
-              estadoJudicial: form.estado.value
+              identificacion,
+              nombres,
+              apellidos,
+              fechaNacimiento,
+              lugarNacimiento,
+              rh,
+              fechaExpedicion,
+              lugarExpedicion,
+              estatura,
+              estadoJudicial: estado
             };
 
             ciudadanos.push(nuevoCiudadano);
             localStorage.setItem('ciudadanos', JSON.stringify(ciudadanos));
 
-            // 🔹 Mostrar overlay de operación exitosa
+            // Mostrar overlay de éxito
             mostrarOperacionExitosaPrompt();
+          });
+
+          // Limpiar errores al escribir
+          form.querySelectorAll('input, select').forEach(campo => {
+            campo.addEventListener('input', () => {
+              campo.style.borderColor = '#bfbfbf';
+              const error = campo.nextElementSibling;
+              if (error && error.classList.contains('error-text')) {
+                error.remove();
+              }
+            });
           });
         });
 

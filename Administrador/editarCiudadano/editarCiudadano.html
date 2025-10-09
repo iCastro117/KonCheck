@@ -401,6 +401,28 @@
       padding: 20px;
       font-size: 16px;
     }
+
+    /* 🔴 ESTILOS PARA VALIDACIONES EN ROJO */
+    .campo-error {
+      border: 2px solid #d32f2f !important;
+      background-color: #ffebee !important;
+    }
+
+    .mensaje-error {
+      color: #d32f2f;
+      font-size: 12px;
+      margin-top: 5px;
+      font-weight: 600;
+      display: none;
+    }
+
+    .mensaje-error.mostrar {
+      display: block;
+    }
+
+    .label-error {
+      color: #d32f2f !important;
+    }
   </style>
 </head>
 
@@ -446,14 +468,17 @@
             <div class="form-group">
               <label>Identificación</label>
               <input type="text" name="identificacion"/>
+              <div class="mensaje-error" id="error-identificacion">Solo se permiten números</div>
             </div>
             <div class="form-group">
               <label>Nombres</label>
               <input type="text" name="nombres" />
+              <div class="mensaje-error" id="error-nombres">Solo se permiten letras</div>
             </div>
             <div class="form-group">
               <label>Apellidos</label>
               <input type="text" name="apellidos" />
+              <div class="mensaje-error" id="error-apellidos">Solo se permiten letras</div>
             </div>
           </div>
 
@@ -461,14 +486,17 @@
             <div class="form-group">
               <label>Fecha de nacimiento</label>
               <input type="date" name="fechaNacimiento" />
+              <div class="mensaje-error" id="error-fechaNacimiento">Campo obligatorio</div>
             </div>
             <div class="form-group">
               <label>Lugar de nacimiento</label>
               <input type="text" name="lugarNacimiento" />
+              <div class="mensaje-error" id="error-lugarNacimiento">Solo se permiten letras</div>
             </div>
             <div class="form-group">
               <label>RH</label>
               <input type="text" name="rh" />
+              <div class="mensaje-error" id="error-rh">Valores válidos: A+, A-, B+, B-, AB+, AB-, O+, O-</div>
             </div>
           </div>
 
@@ -476,14 +504,17 @@
             <div class="form-group">
               <label>Fecha de expedición</label>
               <input type="date" name="fechaExpedicion" />
+              <div class="mensaje-error" id="error-fechaExpedicion">Campo obligatorio</div>
             </div>
             <div class="form-group">
               <label>Lugar de expedición</label>
               <input type="text" name="lugarExpedicion" />
+              <div class="mensaje-error" id="error-lugarExpedicion">Solo se permiten letras</div>
             </div>
             <div class="form-group">
               <label>Estatura (m)</label>
               <input type="text" name="estatura" />
+              <div class="mensaje-error" id="error-estatura">Campo obligatorio</div>
             </div>
           </div>
 
@@ -491,9 +522,11 @@
             <div class="form-group">
               <label>Estado</label>
               <select name="estado" class="estado-select">
+                <option value="">Seleccione un estado</option>
                 <option value="No Requerido">🟢 No Requerido</option>
                 <option value="Requerido">🔴 Requerido</option>
               </select>
+              <div class="mensaje-error" id="error-estado">Debe seleccionar un estado</div>
             </div>
           </div>
 
@@ -562,31 +595,159 @@
         form.estado.value = ciudadano.estadoJudicial;
       }
 
-      // Guardar cambios
+      // Función para limpiar errores
+      function limpiarErrores() {
+        const errores = document.querySelectorAll('.mensaje-error');
+        const campos = document.querySelectorAll('.form-group input, .form-group select');
+        const labels = document.querySelectorAll('.form-group label');
+        
+        errores.forEach(error => error.classList.remove('mostrar'));
+        campos.forEach(campo => campo.classList.remove('campo-error'));
+        labels.forEach(label => label.classList.remove('label-error'));
+      }
+
+      // Función para mostrar error en un campo específico
+      function mostrarError(campoNombre, mensaje) {
+        const campo = form.querySelector(`[name="${campoNombre}"]`);
+        const errorElement = document.getElementById(`error-${campoNombre}`);
+        const label = campo.closest('.form-group').querySelector('label');
+        
+        campo.classList.add('campo-error');
+        label.classList.add('label-error');
+        errorElement.textContent = mensaje;
+        errorElement.classList.add('mostrar');
+      }
+
+      // 🔹 VALIDACIÓN ANTES DE GUARDAR
       form.addEventListener('submit', (e) => {
         e.preventDefault();
+        
+        // Limpiar errores previos
+        limpiarErrores();
+
+        const identificacion = form.identificacion.value.trim();
+        const nombres = form.nombres.value.trim();
+        const apellidos = form.apellidos.value.trim();
+        const fechaNacimiento = form.fechaNacimiento.value.trim();
+        const lugarNacimiento = form.lugarNacimiento.value.trim();
+        const rh = form.rh.value.trim().toUpperCase();
+        const fechaExpedicion = form.fechaExpedicion.value.trim();
+        const lugarExpedicion = form.lugarExpedicion.value.trim();
+        const estatura = form.estatura.value.trim();
+        const estado = form.estado.value.trim();
+
+        const rhValidos = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+        let hayErrores = false;
+
+        // 🔸 Validaciones
+        if (!identificacion) {
+          mostrarError('identificacion', 'Campo obligatorio');
+          hayErrores = true;
+        } else if (!/^\d+$/.test(identificacion)) {
+          mostrarError('identificacion', 'Solo se permiten números');
+          hayErrores = true;
+        }
+
+        if (!nombres) {
+          mostrarError('nombres', 'Campo obligatorio');
+          hayErrores = true;
+        } else if (!/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/.test(nombres)) {
+          mostrarError('nombres', 'Solo se permiten letras');
+          hayErrores = true;
+        }
+
+        if (!apellidos) {
+          mostrarError('apellidos', 'Campo obligatorio');
+          hayErrores = true;
+        } else if (!/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/.test(apellidos)) {
+          mostrarError('apellidos', 'Solo se permiten letras');
+          hayErrores = true;
+        }
+
+        if (!fechaNacimiento) {
+          mostrarError('fechaNacimiento', 'Campo obligatorio');
+          hayErrores = true;
+        }
+
+        if (!lugarNacimiento) {
+          mostrarError('lugarNacimiento', 'Campo obligatorio');
+          hayErrores = true;
+        } else if (!/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/.test(lugarNacimiento)) {
+          mostrarError('lugarNacimiento', 'Solo se permiten letras');
+          hayErrores = true;
+        }
+
+        if (!rh) {
+          mostrarError('rh', 'Campo obligatorio');
+          hayErrores = true;
+        } else if (!rhValidos.includes(rh)) {
+          mostrarError('rh', 'Valores válidos: A+, A-, B+, B-, AB+, AB-, O+, O-');
+          hayErrores = true;
+        }
+
+        if (!fechaExpedicion) {
+          mostrarError('fechaExpedicion', 'Campo obligatorio');
+          hayErrores = true;
+        }
+
+        if (!lugarExpedicion) {
+          mostrarError('lugarExpedicion', 'Campo obligatorio');
+          hayErrores = true;
+        } else if (!/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/.test(lugarExpedicion)) {
+          mostrarError('lugarExpedicion', 'Solo se permiten letras');
+          hayErrores = true;
+        }
+
+        if (!estatura) {
+          mostrarError('estatura', 'Campo obligatorio');
+          hayErrores = true;
+        }
+
+        if (!estado) {
+          mostrarError('estado', 'Debe seleccionar un estado');
+          hayErrores = true;
+        }
+
+        if (hayErrores) {
+          return;
+        }
+
+        // Si todo pasa, guardar cambios normalmente
         const ciudadanos = JSON.parse(localStorage.getItem('ciudadanos')) || [];
         const index = parseInt(localStorage.getItem('ciudadanoIndex'), 10);
 
         ciudadanos[index] = {
-          identificacion: form.identificacion.value,
-          nombres: form.nombres.value,
-          apellidos: form.apellidos.value,
-          fechaNacimiento: form.fechaNacimiento.value,
-          lugarNacimiento: form.lugarNacimiento.value,
-          rh: form.rh.value,
-          fechaExpedicion: form.fechaExpedicion.value,
-          lugarExpedicion: form.lugarExpedicion.value,
-          estatura: form.estatura.value,
-          estadoJudicial: form.estado.value
+          identificacion,
+          nombres,
+          apellidos,
+          fechaNacimiento,
+          lugarNacimiento,
+          rh,
+          fechaExpedicion,
+          lugarExpedicion,
+          estatura,
+          estadoJudicial: estado
         };
 
         localStorage.setItem('ciudadanos', JSON.stringify(ciudadanos));
         localStorage.removeItem('ciudadanoSeleccionado');
         localStorage.removeItem('ciudadanoIndex');
 
-        // 🔹 Mostrar overlay de operación exitosa
         mostrarOperacionExitosaPrompt();
+      });
+
+      // Limpiar errores cuando el usuario empiece a escribir
+      const inputs = form.querySelectorAll('input, select');
+      inputs.forEach(input => {
+        input.addEventListener('input', () => {
+          input.classList.remove('campo-error');
+          const errorElement = document.getElementById(`error-${input.name}`);
+          if (errorElement) {
+            errorElement.classList.remove('mostrar');
+          }
+          const label = input.closest('.form-group').querySelector('label');
+          label.classList.remove('label-error');
+        });
       });
     });
 
