@@ -766,13 +766,23 @@ margin-top: 10px;
 }
 
 .tarjeta .foto-id {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  background: #ccc;
+  width: 100px;              /* 🔹 más pequeña */
+  height: 100px;
+  border-radius: 50%;       /* 🔹 forma redonda */
+  overflow: hidden;         /* 🔹 recorta la imagen dentro del círculo */
   align-self: flex-end;
-  margin-top: -75px;
+  margin-top: -60px;        /* 🔹 ajusta posición más limpia */
+  border: 3px solid #fff;   /* 🔹 borde blanco para resaltar */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* 🔹 sombra suave */
 }
+
+.tarjeta .foto-id img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;        /* 🔹 asegura que la imagen llene el círculo */
+  border-radius: 40%;       /* 🔹 redondea la imagen también */
+}
+
 
 .tarjeta .datos h2 {
   margin: 15px 0 5px 0;
@@ -1145,51 +1155,53 @@ text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6); /* 🌟 sombra paralela */
 <div class="carrusel-wrapper">
   <div class="tarjeta izquierda">
     <div class="logo-id"><img src="./Assets/LOGOLandingpage.png"></div>
-    <div class="foto-id"></div>
+    <div class="foto-id"><img src="./Assets/MAURICIO.jpeg"></div>
     <div class="datos">
-      <h2>Nombre Apellido</h2>
-      <h4>Frontend Developer</h4>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <h2>MAURICIO ITURRIZA </h2>
+      <h4>FULL STACK</h4>
+      <p>Desarrolló el sprint 4 y 5 en conjunto con el desarrollador Salim Ferez</p>
     </div>
   </div>
 
   <div class="tarjeta centro">
     <div class="logo-id"><img src="./Assets/LOGOLandingpage.png"></div>
-    <div class="foto-id"></div>
+    <div class="foto-id"><img src="./Assets/logoO.jpeg"></div>
     <div class="datos">
-      <h2>Nombre Apellido</h2>
-      <h4>Frontend Developer</h4>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <h2>ADRIAN</h2>
+      <h4>FULL STACK</h4>
+      <p>Desarrolló el sprint 3.</p>
     </div>
   </div>
 
   <div class="tarjeta derecha">
     <div class="logo-id"><img src="./Assets/LOGOLandingpage.png"></div>
-    <div class="foto-id"></div>
+    <div class="foto-id"><img src="./Assets/logoO.jpeg"></div>
+    FULL STACK
     <div class="datos">
-      <h2>Nombre Apellido</h2>
-      <h4>Frontend Developer</h4>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <h2>SALIM FEREZ</h2>
+      <h4>FULL STACK</h4>
+      <p>Desarrolló el sprint 4 y 5 en conjunto con el desarrollador Mauricio Iturriza</p>
     </div>
   </div>
 
   <div class="tarjeta fuera-der">
     <div class="logo-id"><img src="./Assets/LOGOLandingpage.png"></div>
-    <div class="foto-id"></div>
+    <div class="foto-id"><img src="./Assets/logoO.jpeg"></div>
+    FULL STACK
     <div class="datos">
-      <h2>Nombre Apellido</h2>
-      <h4>Frontend Developer</h4>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <h2>DANNA</h2>
+      <h4>FULL STACK</h4>
+      <p>Desarrolló el sprint 4 y 5 en conjunto con el desarrollador Isabella Castro</p>
     </div>
   </div>
 
   <div class="tarjeta fuera-izq">
-    <div class="logo-id"><img src="./Assets/LOGOLandingpage.png"></div>
-    <div class="foto-id"></div>
+     <div class="logo-id"><img src="./Assets/LOGOLandingpage.png"></div>
+    <div class="foto-id"><img src="./Assets/logoO.jpeg"></div>
     <div class="datos">
-      <h2>Nombre Apellido</h2>
-      <h4>Frontend Developer</h4>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <h2>ISABELLA CASTRO</h2>
+      <h4>FULL STACK</h4>
+      <p>Desarrolló el sprint 4 y 5 en conjunto con el desarrollador Danna</p>
     </div>
   </div>
 
