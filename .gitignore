@@ -45,3 +45,6 @@ domain1/
 
 .github/instructions/kluster-code-verify.instructions.md
 .kluster
+
+.next/
+node_modules/
