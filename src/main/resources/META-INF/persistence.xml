@@ -13,6 +13,7 @@
         <class>edu.konrad.model.Administrador</class>
         <class>edu.konrad.model.Ciudadano</class>
         <class>edu.konrad.model.Documento</class>
+        <class>edu.konrad.model.FuerzaPublica</class>
 
         <properties>
             <!-- Hibernate genera/actualiza el esquema automáticamente -->

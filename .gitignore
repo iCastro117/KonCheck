@@ -41,3 +41,10 @@ domain1/
 *.zip
 *.tar.gz
 *.rar
+
+
+.github/instructions/kluster-code-verify.instructions.md
+.kluster
+
+.next/
+node_modules/

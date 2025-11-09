@@ -113,7 +113,7 @@
       border-color: #00b33c;
     }
     .rol-admin input[type="radio"]:checked {
-      border-color: #0066cc;
+      border-color: hwb(210 0% 20%);
     }
 
     .rol-options input[type="radio"]:focus {
@@ -282,18 +282,20 @@
       <h1 class="titulo">INGRESAR</h1>
 
       <div class="rol-section" role="radiogroup" aria-label="Selecciona tu rol">
-        <p>Selecciona tu rol</p>
-        <div class="rol-options">
-          <label class="rol-fuerza">
-            <input type="radio" name="rol" value="fuerza" aria-checked="false" />
-            <span>Fuerza Pública</span>
-          </label>
-          <label class="rol-admin">
-            <input type="radio" name="rol" value="admin" checked aria-checked="true" />
-            <span>Administrador</span>
-          </label>
-        </div>
-      </div>
+  <p style="color:#009EBE !important;">Selecciona tu rol</p>
+
+  <div class="rol-options">
+    <label class="rol-fuerza">
+      <input type="radio" name="rol" value="fuerza" aria-checked="false" />
+      <span>Fuerza Pública</span>
+    </label>
+    <label class="rol-admin">
+      <input type="radio" name="rol" value="admin" checked aria-checked="true" />
+      <span>Administrador</span>
+    </label>
+  </div>
+</div>
+
 
       <form id="loginForm" novalidate>
         <div class="input-group">

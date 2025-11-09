@@ -335,7 +335,7 @@
           <div class="form-row">
             <div class="form-group">
               <label>Identificación</label>
-              <input type="text" name="identificacion" placeholder="1.088.765.432" />
+              <input type="text" name="identificacion" placeholder="1088765432 (10 dígitos)" maxlength="10" />
             </div>
             <div class="form-group">
               <label>Nombres</label>
@@ -446,6 +446,7 @@
             // 🔹 Validaciones campo por campo
             if (!identificacion) mostrarError(form.identificacion, "Campo obligatorio.");
             else if (!/^\d+$/.test(identificacion)) mostrarError(form.identificacion, "Solo números permitidos.");
+            else if (identificacion.length !== 10) mostrarError(form.identificacion, "Debe tener exactamente 10 dígitos.");
 
             if (!nombres) mostrarError(form.nombres, "Campo obligatorio.");
             else if (!/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/.test(nombres)) mostrarError(form.nombres, "Solo letras permitidas.");

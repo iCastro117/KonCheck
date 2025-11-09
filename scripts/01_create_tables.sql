@@ -74,6 +74,32 @@ CREATE TABLE IF NOT EXISTS documentos (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- =====================================
+-- TABLA USUARIOS FUERZA PÚBLICA
+-- =====================================
+CREATE TABLE IF NOT EXISTS usuario_fuerza_publica (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    identificacion VARCHAR(20) NOT NULL UNIQUE,
+    nombres VARCHAR(100) NOT NULL,
+    apellidos VARCHAR(100) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    fecha_nacimiento DATE,
+    lugar_nacimiento VARCHAR(100),
+    rh VARCHAR(5),
+    fecha_expedicion DATE,
+    lugar_expedicion VARCHAR(100),
+    estatura DOUBLE,
+    estado_judicial VARCHAR(50) DEFAULT 'No Requerido',
+    activo BOOLEAN NOT NULL DEFAULT TRUE,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    ultimo_acceso TIMESTAMP NULL,
+    
+    INDEX idx_identificacion (identificacion),
+    INDEX idx_activo (activo),
+    INDEX idx_fecha_creacion (fecha_creacion)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- =====================================
 -- MENSAJE FINAL
 -- =====================================
 SELECT '✅ Tablas creadas exitosamente' AS mensaje;
